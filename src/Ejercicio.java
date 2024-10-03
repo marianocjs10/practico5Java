@@ -78,10 +78,10 @@ public class Ejercicio {
                 """);
     }
 
-
-
+    public static int[] A = {7, 2, 3, 1};
+    public static int[] original={7, 2, 3, 1};
+    public  static String [] nombre1 = {"juan","pedro","roberto","jose"};
     public static void punto2() {
-        int[] A = {7, 2, 3, 1}; String[] L= {"juan","pedro","roberto","jose"}; String a = "pedro";
         int opcion = 1;
         while (opcion != 0) {
             System.out.println("Elija el algoritmo fundamental que desea:\n" +
@@ -94,28 +94,33 @@ public class Ejercicio {
 
             if (opcion == 1) {
                 //Ordenamiento por inserción
-                insercion(A);
+                resetearLista();
+                System.out.println("Array original: "+Arrays.toString(A));
+                insercion();
                 System.out.println(Arrays.toString(A));
             } else if (opcion == 2) {
                 //Algoritmo de la burbuja
-                burbuja(A);
-                System.out.println(Arrays.toString(A));
+                resetearLista();
+                System.out.println("Array original: "+Arrays.toString(A));
+                burbuja();
+                System.out.println("Array original: "+Arrays.toString(A));
             } else if (opcion == 3) {
                 //Ordenamiento por selección
-                seleccion(A);
+                resetearLista();
+                System.out.println("Array original: "+Arrays.toString(A));
+                seleccion();
                 System.out.println(Arrays.toString(A));
             } else if (opcion == 4) {
                 //Búsqueda secuencial
-                if(busquedaSecuencial(L, a)){
-                    System.out.println("Se encontró el alumno");
-                }else{
-                    System.out.println("No se econtró el alumno");
-                }
-
+                System.out.println("Lista de nombres: "+Arrays.toString(nombre1));
+                busquedaSecuencial();
             }
         }
     }
-    public static void insercion(int[] A) {
+    public static void resetearLista(){
+        A= Arrays.copyOf(original, original.length);
+    }
+    public static void insercion() {
         for (int i = 1; i < A.length; i++) {
             int valor = A[i];
             int j = i - 1;
@@ -126,7 +131,7 @@ public class Ejercicio {
             A[j + 1] = valor;
         }
     }
-    public static void burbuja(int[] A) {
+    public static void burbuja() {
         int n = A.length;
         boolean intercambiado;
         do {
@@ -141,7 +146,7 @@ public class Ejercicio {
             }
         } while (intercambiado == true);
     }
-    public static void seleccion(int[] A) {
+    public static void seleccion() {
         int n = A.length;
         for (int i = 0; i < n - 1; i++) {
             int minimo = i;
@@ -155,15 +160,20 @@ public class Ejercicio {
             A[i] = aux;
         }
     }
-    public static boolean busquedaSecuencial(String [] L, String a) {
-        int n = L.length;
+    public static void busquedaSecuencial() {
+        int n = nombre1.length;
         boolean seEncontro = false;
-        for(int i=1; i<n-1; i++){
-            if(L[i].equals(a)){
+        System.out.println("Ingrese el nombre que desea buscar:");
+        String nombre=new Scanner(System.in).nextLine();
+        for(int i=0; i<n; i++){
+            if(nombre1[i].equals(nombre)){
+                System.out.println("Nombre encontrado");
                 seEncontro=true;
             }
         }
-        return seEncontro;
+        if(!seEncontro){
+            System.out.println("No se encontro.");
+        }
     }
 
 
@@ -314,7 +324,7 @@ public class Ejercicio {
             int [][]arreglo= crearArreglo(X,Y);
             int promedio = calcularPromedio(arreglo, X, Y);
             System.out.println("El promedio entero es: "+promedio);
-            boolean encontrado= buscarPromedio(arreglo, promedio,X, Y);
+            buscarPromedio(arreglo, promedio,X, Y);
         }else{
             punto5();
         }
@@ -345,16 +355,18 @@ public class Ejercicio {
         }
         return suma / (X*Y);
     }
-    public static boolean buscarPromedio(int[][] arreglo, int promedio,int X, int Y){
+    public static void buscarPromedio(int[][] arreglo, int promedio,int X, int Y){
+        boolean encontrado=false;
         for (int i = 0; i < X; i++) {
                 for (int j = 0; j < Y; j++) {
                     if (arreglo[i][j] == promedio) {
                         System.out.println("El valor "+promedio+" se encuentra en la posición con índice "+i+","+j);
-                        return true;
+                        encontrado=true;
                     }
                 }
             }
-        System.out.println("Valor no encontrado.");
-        return false;
+        if(!encontrado) {
+            System.out.println("Valor no encontrado.");
+        }
     }
 }
